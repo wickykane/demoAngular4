@@ -1,0 +1,17 @@
+
+.modal-dialog .imagePreview .close {
+    position: relative;
+    left: -15px;
+}
+
+.imageContain {
+    display: inline-block;
+}
+
+.imageContain img {
+    height: 100px;
+}
+
+input[type="file"]{
+    color: transparent;
+}

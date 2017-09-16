@@ -1,0 +1,36 @@
+<div class="table-users">
+    <div style="padding: 10px;">
+        <input style="float: left;" type="text" id="myInput" placeholder="Search for names.." [(ngModel)]="searchKey">
+        <div class="text-right"><button class="btn btn-primary" (click)="toAddEmployee()">New Employee</button></div>
+    </div>
+
+
+    <div class="header">Employee List</div>
+    <table cellspacing="0">
+        <tr>
+            <th>Id</th>
+            <th width=200>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Position</th>
+            <th>Status</th>
+        </tr>
+        <tr *ngFor="let employee of currentListEmployee | filter: searchKey | paginate: { itemsPerPage: 5, currentPage: currentPage }">
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.phone }}</td>
+            <td>{{ employee.position }}</td>
+            <td>{{ employee.status }}</td>
+
+        </tr>
+        <tr *ngIf="currentListEmployee && (currentListEmployee | filter: searchKey).length == 0">
+                <td colspan="6" >No data found.</td>
+        </tr>
+    </table>
+
+    <div class="text-right" *ngIf="currentListEmployee && (currentListEmployee | filter: searchKey).length != 0">
+        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+    </div>
+
+</div>

@@ -1,0 +1,64 @@
+<div class="row" style="margin-right: inherit">
+  <div class="col-sm-3">
+    <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
+      <li [ngClass]="{'active': currentStep == 1}"><a href="javascript:;" (click)="moveToStep(1)">1. Employee Information</a></li>
+      <li [ngClass]="{'active': currentStep == 2}"><a href="javascript:;" >2. Task</a></li>
+    </ul>
+  </div>
+
+  <div class="col-sm-9" style="border-left: 1px solid #ccc">
+    <div class="tab-content">
+      <div class="tab-pane fade in active" *ngIf="currentStep == 1">
+        <div class='col-sm-6'>
+          <h3>
+            1.Information Form
+          </h3>
+          <form [formGroup]="regForm" (ngSubmit)="submitForm(regForm.value)">
+            <div class="form-group" [ngClass]="{'has-error':!regForm.controls['name'].valid && regForm.controls['name'].touched}">
+              <label for="name">Name:</label>
+              <input [formControl]="regForm.controls['name']" class="form-control" required>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!regForm.controls['email'].valid && regForm.controls['email'].touched}">
+              <label for="email">Email:</label>
+              <input type="email" [formControl]="regForm.controls['email']" class="form-control" required>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!regForm.controls['phone'].valid && regForm.controls['phone'].touched}">
+              <label for="phone">Phone:</label>
+              <input type="number" [formControl]="regForm.controls['phone']" class="form-control" required>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!regForm.controls['position'].valid && regForm.controls['position'].touched}">
+              <label for="position">Position:</label>
+              <input type="text" [formControl]="regForm.controls['position']" class="form-control" required>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!regForm.controls['status'].valid && regForm.controls['status'].touched}">
+              <label for="phone">Status:</label>
+              <input type="text" [formControl]="regForm.controls['status']" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success text-right" [disabled]="!regForm.valid">{{ textButton }}</button>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="currentStep == 2">
+        <h3>
+          2.Task
+        </h3>
+        <div>
+          <button class="btn btn-success" (click)="showConfirm()"> Create new task</button>
+          <button class="btn btn-danger" (click)="backToList()"> Later (Back to Home) </button>
+        </div>
+        <div *ngIf="listTask.length > 0">
+          <h4>List task:</h4>
+          <ul>
+            <li *ngFor="let task of listTask; let i = index">
+              <a (click)="showConfirm(task)" href="javascript:;" >{{ (i+1) + "." + task.name }}</a>
+            </li>
+          </ul>
+        </div>
+        <button class="btn btn-default" style="margin-top: 10px;" (click)="moveToStep(1)">Back to step 1</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+

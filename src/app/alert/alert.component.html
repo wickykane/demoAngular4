@@ -1,0 +1,98 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" (click)="close()">&times;</button>
+      <h4 class="modal-title">{{title || 'Confirm'}}</h4>
+    </div>
+    <div class="modal-body" style="max-height: 500px; overflow: auto;">
+      <form name="regForm" id="regForm">
+
+        <!--          
+          <div *ngIf="title.errors && (title.dirty || title.touched)" class="alert alert-danger">
+            <div [hidden]="!title.errors.required">
+              Book title is required!
+            </div>
+            <div [hidden]="!title.errors.minlength">
+              Title must be at least 5 characters long.
+            </div>
+            <div [hidden]="!title.errors.maxlength">
+              Title cannot be more than 30 characters long.
+            </div>
+          </div> -->
+
+        <div class="form-group">
+          <label>Name:</label>
+          <input name="name" class="form-control" required [(ngModel)]="dataForm.name" #name="ngModel">
+          <div style="margin: 5px 0px;" *ngIf="name.errors && (name.dirty || title.touched)" class="alert alert-danger">
+            <p>Name is require!</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Time start:</label>
+          <div style="width: 200px;">
+            <date-picker required [showClearButton]="false" mode="datetime" format='DD/MM/YYYY HH:mm:ss' #date1="ngModel" [(ngModel)]="dataForm.date1"
+              name="date1"></date-picker>
+          </div>
+          <div style="margin: 5px 0px;" *ngIf="date1.errors && (date1.dirty || date1.touched)" class="alert alert-danger">
+            <p>Time start is invalid!</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Time end:</label>
+          <div style="width: 200px;">
+            <date-picker required [showClearButton]="false" mode="datetime" format='DD/MM/YYYY HH:mm:ss' #date2="ngModel" [(ngModel)]="dataForm.date2"
+              name="date2"></date-picker>
+          </div>
+          <div style="margin: 5px 0px;" *ngIf="date2.errors && (date2.dirty || date2.touched)" class="alert alert-danger">
+            <p>Time end is invalid!</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Task Description</label>
+          <textarea #des="ngModel" name="des" [(ngModel)]="dataForm.des" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Select one type:</label>
+          <select2 [data]="optionData" [value]="currentSelected" (valueChanged)="changeTypeUpload($event)"></select2>
+        </div>
+        <div *ngIf="currentSelected == 1">
+          <div class="imagePreview" style="min-height: 100px; border: 1px solid #e3e3e3; border-radius: 4px;">
+            <!-- <p class="text-center " style="color: #e3e3e3; font-size: 2em; margin-top: 10px;">Drag and drop</p> -->
+            <div *ngIf="!image.errors" class="imageContain">
+              <img alt="" [src]="dataForm.image.src" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <input pattern="https?://.+" type="text" #image="ngModel" class="form-control" [(ngModel)]="dataForm.image.src" name="image">
+            <div class="input-group-addon">
+              <span class="glyphicon glyphicon-link"></span>
+            </div>
+          </div>
+          <div style="margin: 5px 0px;" *ngIf="image.errors && (image.dirty || image.touched)" class="alert alert-danger">
+              <p>Image link is invalid!</p>
+            </div>
+        </div>
+        <div *ngIf="currentSelected == 2">
+          <div class="imagePreview" style="min-height: 100px; border: 1px solid #e3e3e3; border-radius: 4px;">
+            <!-- <p class="text-center " style="color: #e3e3e3; font-size: 2em; margin-top: 10px;">Drag and drop</p> -->
+            <div class="imageContain" *ngFor="let img of listImage, let i = index">
+              <button class="close" type="button" (click)="hideParent(img.id)">×</button>
+              <img alt="image" [src]="img.src" />
+            </div>
+          </div>
+          <div class="input-group">
+            <input type="file" accept="image/*" title="" (change)="fileChanged($event)" class="form-control" multiple id="uploadImageInput">
+            <div class="input-group-addon">
+              <span class="glyphicon glyphicon-picture"></span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" [disabled]="name.errors || date1.errors || date2.errors" class="btn btn-primary" (click)="confirm()">OK</button>
+      <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+    </div>
+  </div>
+</div>
