@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "Quang Huy",
+        "email": "wickykane@gmail.com",
+        "position": "dev",
+        "status": "active"
+    },
+    {
+        "id": 2,
+        "name": "Wicky",
+        "email": "wickykane@gmail.com",
+        "position": "dev",
+        "status": "active"
+    },
+    {
+        "id": 3,
+        "name": "Taylor Swift",
+        "email": "wickykane@gmail.com",
+        "position": "dev",
+        "status": "active"
+    }
+]
